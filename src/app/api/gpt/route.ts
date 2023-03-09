@@ -4,7 +4,7 @@ const API_URL = "https://api.openai.com/v1/chat/completions";
 // evn
 const API_KEY = process.env.OPENAI_API_KEY;
 const model = "gpt-3.5-turbo";
-const max_length = 100;
+const max_tokens = 5120;
 
 export type ChatGPTAgent = "user" | "system";
 export interface ChatGPTMessage {
@@ -47,7 +47,7 @@ async function generateResponse(messages: any) {
     // top_p: 1,
     // frequency_penalty: 0,
     // presence_penalty: 0,
-    max_tokens: 320,
+    max_tokens,
     // stream: false,
     // n: 1,
   };
