@@ -57,6 +57,17 @@
 
   margin-bottom: 15px;
 }
+.msg .err {
+  color: rgb(255, 0, 0);
+}
+.msg .err .r {
+  width: 16px;
+  height: 16px;
+  float: right;
+  margin-right: 8px;
+  color: yellow;
+  cursor: pointer;
+}
 .msg .code {
   /* background-color: rgba(0, 0, 0, .8)!important; */
 }

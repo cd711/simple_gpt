@@ -1,17 +1,16 @@
 import axios from "axios";
 
-const API_URL = 'https://api.openai.com/v1/chat/completions';
-// evn 
+const API_URL = "https://api.openai.com/v1/chat/completions";
+// evn
 const API_KEY = process.env.OPENAI_API_KEY;
-const model = 'gpt-3.5-turbo';
+const model = "gpt-3.5-turbo";
 const max_length = 100;
 
-export type ChatGPTAgent = 'user' | 'system';
+export type ChatGPTAgent = "user" | "system";
 export interface ChatGPTMessage {
   role: ChatGPTAgent;
   content: string;
 }
-
 
 export interface OpenAIStreamPayload {
   model: string;
@@ -53,9 +52,10 @@ async function generateResponse(messages: any) {
     // n: 1,
   };
   const response = await axios.request({
-    url: API_URL,
-    method: 'POST',
-    data: args,
+    url:
+      "https://xiu4frlel3nlkbduklxbke4kmi0bfrtb.lambda-url.ap-southeast-1.on.aws",
+    method: "POST",
+    data: { key: API_KEY, data: JSON.stringify(args) },
 
     // proxy: {
     //   host: '127.0.0.1',
@@ -64,8 +64,8 @@ async function generateResponse(messages: any) {
     // },
     // responseType: 'text',
     headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      'Content-Type': 'application/json',
+      // Authorization: `Bearer ${API_KEY}`,
+      "Content-Type": "application/json",
     },
     timeout: 25000,
     // proxy:
@@ -76,21 +76,20 @@ async function generateResponse(messages: any) {
     throw response.statusText;
   }
   const {
-    id, choices
+    id,
+    choices,
   } = response.data;
-  // const res = 
+  // const res =
   const res = choices.map(({ message, index }: any) => {
     // console.log(message, index)
     return {
       text: message.content,
       id: `${id}-${index}`,
-    }
+    };
   });
   console.log(res);
   return res;
-
 }
-
 
 export async function POST(request: Request) {
   const messages = await request.json();
